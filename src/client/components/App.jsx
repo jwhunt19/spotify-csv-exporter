@@ -116,14 +116,14 @@ function App() {
   }
 
   const downloadCSV = (tracks, playlistName) => {
-    const csv = [["Artist", "Track", "Album", "Added At", "Duration"]];
+    const csv = [["Artist", "Track", "Album", "Date_added", "Duration"]];
     tracks.forEach((track) => {
       let time = convertMillisecondsToMMSS(track.track.duration_ms);
       csv.push([
         `"${track.track.artists[0]?.name || "Unknown Artist"}"`,
         `"${track.track.name || "Unknown Track"}"`,
         `"${track.track.album?.name || "Unknown Album"}"`,
-        track.added_at || "Unknown Date",
+        track.added_at.slice(0, -1) || "Unknown Date",
         time || "Unknown Duration",
       ]);
     });
@@ -131,7 +131,7 @@ function App() {
     const encodedUri = encodeURIComponent(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", `data:text/csv;charset=utf-8,${encodedUri}`);
-    link.setAttribute("download", `${playlistName}.csv`);
+    link.setAttribute("download", `${playlistName.replaceAll(" ", "_")}.csv`);
     document.body.appendChild(link);
     link.click();
   };
