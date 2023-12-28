@@ -54,7 +54,7 @@ export async function getToken(code) {
       },
     });
 
-    const expiresIn = response.data.expires_in; // Time in seconds
+    const expiresIn = response.data.expires_in;
     const expirationTime = new Date().getTime() + expiresIn * 1000;
     localStorage.setItem("access_token", response.data.access_token);
     localStorage.setItem("expiration_time", expirationTime);
@@ -70,3 +70,9 @@ export async function getToken(code) {
     );
   }
 }
+
+// check if token is expired
+export function isTokenExpired() {
+  const expirationTime = localStorage.getItem("expiration_time");
+  return new Date().getTime() > expirationTime;
+};

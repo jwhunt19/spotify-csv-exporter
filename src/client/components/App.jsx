@@ -1,15 +1,9 @@
 import "./App.css";
-import { getToken, initiateOAuthProcess } from "../services/auth";
+import { getToken, initiateOAuthProcess, isTokenExpired } from "../services/auth";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Playlist from "./Playlist";
 import PlaylistList from "./PlaylistList";
-
-// check if token is expired
-const isTokenExpired = () => {
-  const expirationTime = localStorage.getItem("expiration_time");
-  return new Date().getTime() > expirationTime;
-};
 
 // react app
 function App() {
