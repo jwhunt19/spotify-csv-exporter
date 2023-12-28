@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://jwhunt19.github.io/spotify-csv-exporter/",
+  "homepage": "/",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
