@@ -1,0 +1,90 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+p {
+  margin: 0;
+}
+
+.playlists-container {
+  background-color: #333333; /* Slightly lighter gray */
+  border-radius: 15px;
+  width: 40vw;
+  margin-top: 2em;
+}
+
+.playlists-header {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.playlists-list {
+  height: 60vh;
+  overflow-y: auto;
+  list-style: none;
+  background-color: #283593;
+  color: #cccccc;
+  padding: 0;
+}
+
+.playlists-list li {
+  border-bottom: 1px solid #6573c3; /* Lighter shade of indigo */
+  padding: 10px 0; /* Add some vertical padding to give each item some space */
+  display: flex;
+  padding-left: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.playlists-list li:last-child {
+  border-bottom: none; /* Remove the border on the last list item */
+}
+
+.playlists-list li:hover {
+  background-color: #3f51b5; /* Darker shade of indigo */
+}
+
+.playlists-list li div {
+  display: flex;
+  align-items: center;
+}
+
+.playlists-list li img {
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
+}
+
+.playlists-list li button {
+  background-color: #ffffff;
+  color: #333333;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.playlists-list li button:hover {
+  background-color: #cccccc;
+}
+
+.playlists-list li button:active {
+  background-color: #999999;
+}
+
+.playlists-arrows {
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 0;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  font-size: large;
+  font-weight: bold;
+}
