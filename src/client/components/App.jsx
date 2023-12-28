@@ -9,6 +9,7 @@ import PlaylistList from "./PlaylistList";
 function App() {
   const [user, setUser] = useState(null);
   const [userID, setUserID] = useState(null);
+  const [userPic, setUserPic] = useState(null);
   const [playlists, setPlaylists] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState(null);
@@ -52,9 +53,10 @@ function App() {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       })
-      .then((response) => {
-        setUserID(response.data.id);
-        setUser(response.data.display_name);
+      .then(({data}) => {
+        setUserID(data.id);
+        setUser(data.display_name);
+        setUserPic(data.images[0].url);
       });
   };
 
@@ -141,9 +143,12 @@ function App() {
   return (
     <div className="App">
       <h1>Spotify CSV Exporter</h1>
-      <p>Export your Spotify playlists to CSV</p>
+      <h2>Export your Spotify playlists to CSV</h2>
       {loggedIn ? (
+        <div className="user">
         <p>Logged in as {user}</p>
+        <img src={userPic} alt={user}></img>
+        </div>
       ) : (
         <button onClick={login}>Log in with Spotify</button>
       )}

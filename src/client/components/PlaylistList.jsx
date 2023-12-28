@@ -3,7 +3,7 @@ import Playlist from "./Playlist";
 const PlaylistList = ({ playlists, getPlaylists, getPlaylistTracks }) => {
   return (
     <div className="playlists-container">
-      <h2 className="playlists-header">Playlists</h2>
+      <h3 className="playlists-header">Playlists</h3>
       <ul className="playlists-list">
         {playlists.items.map((playlist) => (
           <Playlist
