@@ -1,3 +1,19 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #2D2F33;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
 .App {
   display: flex;
   flex-direction: column;
@@ -9,14 +25,15 @@ p {
 }
 
 .playlists-container {
-  background-color: #333333; /* Slightly lighter gray */
+  background: linear-gradient(145deg, #3F4147, #343639); 
+  color: #E8EAF6;
   border-radius: 15px;
-  width: 40vw;
+  width: 50vw;
   margin-top: 2em;
+  border: 1px solid #343639;
 }
 
 .playlists-header {
-  color: #ffffff;
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
@@ -29,15 +46,19 @@ p {
   background-color: #283593;
   color: #cccccc;
   padding: 0;
+  border-top: 1px solid #343639;
+  border-bottom: 1px solid #343639;
 }
 
 .playlists-list li {
-  border-bottom: 1px solid #6573c3; /* Lighter shade of indigo */
+  background-color: #3F4147; /* Cadet Gray for playlist items */
+  border-bottom: 1px solid #646E78; /* Roman Silver for separators */
   padding: 10px 0; /* Add some vertical padding to give each item some space */
   display: flex;
   padding-left: 20px;
   align-items: center;
   justify-content: space-between;
+  font-weight: bold;
 }
 
 .playlists-list li:last-child {
@@ -45,7 +66,7 @@ p {
 }
 
 .playlists-list li:hover {
-  background-color: #3f51b5; /* Darker shade of indigo */
+  background-color: #484C52; 
 }
 
 .playlists-list li div {
@@ -60,8 +81,8 @@ p {
 }
 
 .playlists-list li button {
-  background-color: #ffffff;
-  color: #333333;
+  background-color: #4A90E2;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
@@ -72,11 +93,11 @@ p {
 }
 
 .playlists-list li button:hover {
-  background-color: #cccccc;
+  background-color: #5AA0E7;
 }
 
 .playlists-list li button:active {
-  background-color: #999999;
+  background-color: #197de0;
 }
 
 .playlists-arrows {
@@ -87,4 +108,10 @@ p {
   padding-right: 1.5em;
   font-size: large;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .playlists-container {
+    width: 80vw; /* Adjust width for smaller screens */
+  }
 }
