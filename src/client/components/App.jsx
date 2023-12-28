@@ -28,7 +28,7 @@ function App() {
       if (!localStorage.getItem("access_token") || isTokenExpired()) {
         getToken(code)
           .then(() => {
-            window.history.pushState({}, null, "/"); // remove code from url
+            window.history.pushState({}, null, "/spotify-csv-exporter/"); // remove code from url
             location.reload();
           })
           .catch((error) => {
@@ -37,7 +37,7 @@ function App() {
           });
       } else {
         // if token exists and is not expired, remove code from url
-        window.history.pushState({}, null, "/");
+        window.history.pushState({}, null, "/spotify-csv-exporter/");
       }
     }
 
