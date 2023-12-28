@@ -1,5 +1,9 @@
 import "./App.css";
-import { getToken, initiateOAuthProcess, isTokenExpired } from "../services/auth";
+import {
+  getToken,
+  initiateOAuthProcess,
+  isTokenExpired,
+} from "../services/auth";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Playlist from "./Playlist";
@@ -53,7 +57,7 @@ function App() {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       })
-      .then(({data}) => {
+      .then(({ data }) => {
         setUserID(data.id);
         setUser(data.display_name);
         setUserPic(data.images[0].url);
@@ -140,15 +144,25 @@ function App() {
     initiateOAuthProcess();
   };
 
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("expires_at");
+    setLoggedIn(false);
+    setPlaylists(null);
+  };
+
   return (
     <div className="App">
       <h1>Spotify CSV Exporter</h1>
       <h2>Export your Spotify playlists to CSV</h2>
       {loggedIn ? (
-        <div className="user">
-        <p>Logged in as {user}</p>
-        <img src={userPic} alt={user}></img>
-        </div>
+        <>
+          <div className="user">
+            <p>Logged in as {user}</p>
+            <img src={userPic} alt={user}></img>
+          </div>
+          <button onClick={logout}>Log out</button>
+        </>
       ) : (
         <button onClick={login}>Log in with Spotify</button>
       )}
