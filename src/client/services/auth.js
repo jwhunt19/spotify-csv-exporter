@@ -12,7 +12,7 @@ export async function initiateOAuthProcess() {
   const clientId = "96c884e0f37f4ff6aaea676e3eec7b87";
   const redirectUri = "https://jwhunt19.github.io/spotify-csv-exporter";
 
-  const scope = "playlist-read-private playlist-read-collaborative";
+  const scope = "playlist-read-private playlist-read-collaborative user-read-private user-read-email";
   const authUrl = new URL("https://accounts.spotify.com/authorize");
 
   // generated in the previous step
