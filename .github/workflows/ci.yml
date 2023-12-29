@@ -31,5 +31,5 @@ jobs:
         run: npm run deploy
         env:
           VITE_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          VITE_PUBLIC_URL: ${{ vars.REACT_APP_PUBLIC_URL }}
+          VITE_PUBLIC_URL: 'https://jwhunt19.github.io/spotify-csv-exporter/'
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
