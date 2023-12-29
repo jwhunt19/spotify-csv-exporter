@@ -3,7 +3,7 @@ const Playlist = ({ playlist, getPlaylistTracks }) => {
     if (playlist.images.length > 0) {
       return playlist.images[0].url;
     } else {
-      return "src/client/imgs/playlist_placeholder.png";
+      return "/spotify-csv-exporter/playlist_placeholder.png";
     }
   };
 
