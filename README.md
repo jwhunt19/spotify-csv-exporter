@@ -44,7 +44,8 @@ While setting up the app, set the *Redirect URI* to your localhost for local dev
   **Important Notes**:
   - GitHub Pages Setup: The first time you deploy, you may need to set up GitHub Pages in the repository settings. Select the gh-pages branch as the source for GitHub Pages.
   - No Manual Deployment Needed: With this setup, there's no need for manual deployment commands (npm run deploy). The GitHub Actions workflow handles the build and deployment automatically.
-  - Initial Branch Setup: You don't need to manually create the gh-pages branch. The GitHub Actions workflow will create and push to this branch on its first successful run.
+  - Initial Branch Setup: You don't need to create the gh-pages branch manually. The GitHub Actions workflow will create and push to this branch on its first successful run.
+  - The app will initially only be usable by the Spotify account used to create the Spotify App. You may add up to 25 users in the App settings from the Spotify Dashboard.
   
 
 ## Usage
