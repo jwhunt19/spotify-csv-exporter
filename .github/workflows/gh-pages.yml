@@ -27,7 +27,7 @@ jobs:
         run: npm run build
         env:
           VITE_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          VITE_PUBLIC_URL: 'https://jwhunt19.github.io/spotify-csv-exporter/'
+          VITE_PUBLIC_URL: ${{ vars.PUBLIC_URL }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
