@@ -10,7 +10,7 @@ export async function initiateOAuthProcess() {
   const codeChallenge = await generateCodeChallenge(codeVerifier);
 
   const clientId = "96c884e0f37f4ff6aaea676e3eec7b87";
-  const redirectUri = "http://localhost:5173";
+  const redirectUri = "https://jwhunt19.github.io/spotify-csv-exporter";
 
   const scope = "playlist-read-private playlist-read-collaborative user-read-private user-read-email";
   const authUrl = new URL("https://accounts.spotify.com/authorize");
@@ -36,7 +36,7 @@ export async function getToken(code) {
   let codeVerifier = localStorage.getItem("code_verifier");
 
   const clientId = "96c884e0f37f4ff6aaea676e3eec7b87";
-  const redirectUri = "http://localhost:5173";
+  const redirectUri = "https://jwhunt19.github.io/spotify-csv-exporter";
   const url = "https://accounts.spotify.com/api/token";
 
   const params = new URLSearchParams({
