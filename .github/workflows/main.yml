@@ -9,7 +9,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: github-pages
+    env:
+      REACT_APP_PUBLIC_URL: 'https://jwhunt19.github.io/spotify-csv-exporter/'
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -17,7 +18,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16'
+        node-version: '20'
 
     - name: Install Dependencies
       run: npm install
@@ -25,5 +26,4 @@ jobs:
     - name: Build
       run: npm run build
       env:
-        REACT_APP_PUBLIC_URL: ${{ env.REACT_APP_PUBLIC_URL }}
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
