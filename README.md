@@ -32,7 +32,7 @@ While setting up the app, set the *Redirect URI* to your localhost for local dev
     ```
     This will host the application locally at http://localhost:5173
     
-  - Navigate to http://localhost:5173 in your browser to use the applicaiton
+  - Navigate to http://localhost:5173 in your browser to use the application
 
   ### **Deployed Setup** (Using Github Pages)
   - Set up your environment from your repo by navigating to > "Settings" > "Environments" > "New environment". Name the environment *github-pages*.     
