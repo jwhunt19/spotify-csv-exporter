@@ -1,6 +1,4 @@
 # spotify-csv-exporter
-A web application that allows users to export their Spotify playlists to CSV format. It's built with React and utilizes the Spotify Web API and OAuth for playlist data retrieval.
-
 A web application that allows users to export their Spotify playlists to CSV format. Built with React, it leverages the Spotify Web API and implements OAuth 2.0 with Proof Key for Code Exchange (PKCE) for secure authentication. This approach is particularly suited for single-page applications like this one, ensuring enhanced security during the playlist data retrieval process.
 
 ## Before you get started  
