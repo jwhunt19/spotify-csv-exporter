@@ -6,7 +6,6 @@ import {
 } from "../services/auth";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Playlist from "./Playlist";
 import PlaylistList from "./PlaylistList";
 
 // react app
@@ -61,6 +60,10 @@ function App() {
         setUserID(data.id);
         setUser(data.display_name);
         setUserPic(data.images[0].url);
+      })
+      .catch((error) => {
+        console.error("Error fetching user: ", error);
+        setError(error);
       });
   };
 
@@ -72,8 +75,12 @@ function App() {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       })
-      .then((response) => {
-        setPlaylists(response.data);
+      .then(({ data }) => {
+        setPlaylists(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching Playlists: ", error);
+        setError(error);
       });
   };
 
@@ -95,6 +102,10 @@ function App() {
           } else {
             return tracks;
           }
+        })
+        .catch((error) => {
+          console.error("Error fetching track list: ", error);
+          setError(error);
         });
     };
 
