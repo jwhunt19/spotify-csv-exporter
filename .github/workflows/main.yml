@@ -1,0 +1,32 @@
+name: Build and Deploy React App
+
+on:
+  push:
+    branches:
+      - main
+      - gh-pages
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+      env:
+        REACT_APP_PUBLIC_URL: ${{ vars.REACT_APP_PUBLIC_URL }}
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+
+    # Add additional steps for deployment here
+    # This could be a custom script or an action to deploy the build artifacts to a server or gh-pages
