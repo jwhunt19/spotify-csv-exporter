@@ -29,17 +29,8 @@ jobs:
           VITE_CLIENT_ID: ${{ secrets.CLIENT_ID }}
           VITE_PUBLIC_URL: 'https://jwhunt19.github.io/spotify-csv-exporter/'
 
-      - name: Check Secret Availability
-        run: |
-          if [ -z "${{ secrets.PERSONAL_ACCESS_TOKEN }}" ]; then
-            echo "Secret is NOT available."
-          else
-            echo "Secret is available."
-          fi
-
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
