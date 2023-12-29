@@ -49,3 +49,5 @@ While setting up the app, set the *Redirect URI* to your localhost for local dev
 
 ## Usage
 Once the app is running, log in with your Spotify credentials. You'll be able to view your playlists and export them to CSV format.
+
+![demo](docs/demo.gif)
