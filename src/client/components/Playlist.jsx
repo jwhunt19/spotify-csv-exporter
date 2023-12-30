@@ -1,4 +1,4 @@
-const Playlist = ({ playlist, getPlaylistTracks }) => {
+const Playlist = ({ playlist, handleDownload }) => {
   const checkForImage = (playlist) => {
     if (playlist.images.length > 0) {
       return playlist.images[0].url;
@@ -15,7 +15,7 @@ const Playlist = ({ playlist, getPlaylistTracks }) => {
         <img src={src} alt={playlist.name}></img>
         <p>{playlist.name}</p>
       </div>
-      <button onClick={() => getPlaylistTracks(playlist)}>&darr;</button>
+      <button onClick={() => handleDownload(playlist)}>&darr;</button>
     </li>
   );
 };

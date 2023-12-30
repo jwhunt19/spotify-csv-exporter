@@ -6,9 +6,12 @@ import {
   initiateOAuthProcess,
   isTokenExpired,
   handleAuthCode,
+} from "../services/auth";
+import {
   getUserInfo,
   getPlaylists,
-} from "../services/auth";
+  getPlaylistTracks,
+} from "../services/spotifyService";
 import { convertMillisecondsToMMSS } from "../utils/convertMillisecondsToMMSS";
 
 // react app
@@ -43,33 +46,13 @@ function App() {
     }
   }, []);
 
-  // get tracks from selected playlist // TODO: move to services
-  const getPlaylistTracks = (playlist) => {
-    let tracks = [];
-    const getTracks = (url) => {
-      return axios
-        .get(url, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        })
-        .then(({ data }) => {
-          tracks = tracks.concat(data.items);
-          if (data.next) {
-            return getTracks(data.next);
-          } else {
-            return tracks;
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching track list: ", error);
-          setError(error);
-        });
-    };
-
-    getTracks(playlist.tracks.href).then((tracks) => {
-      downloadCSV(tracks, playlist.name);
-    });
+  const handleDownload = async (playlist) => {
+    try {
+      const tracks = await getPlaylistTracks(playlist);
+      // downloadCSV(tracks, playlist.name);
+    } catch (error) {
+      setError(error);
+    }
   };
 
   // TODO: move to utils?
@@ -124,7 +107,7 @@ function App() {
         <PlaylistList
           playlists={playlists}
           getPlaylists={getPlaylists}
-          getPlaylistTracks={getPlaylistTracks}
+          handleDownload={handleDownload}
         />
       )}
     </div>

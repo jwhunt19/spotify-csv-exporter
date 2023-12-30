@@ -1,6 +1,6 @@
 import Playlist from "./Playlist";
 
-const PlaylistList = ({ playlists, getPlaylists, getPlaylistTracks }) => {
+const PlaylistList = ({ playlists, getPlaylists, handleDownload }) => {
   return (
     <div className="playlists-container">
       <h3 className="playlists-header">Playlists</h3>
@@ -9,7 +9,7 @@ const PlaylistList = ({ playlists, getPlaylists, getPlaylistTracks }) => {
           <Playlist
             key={playlist.id}
             playlist={playlist}
-            getPlaylistTracks={getPlaylistTracks}
+            handleDownload={handleDownload}
           />
         ))}
       </ul>
