@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import "./App.css";
 import PlaylistList from "./PlaylistList";
@@ -20,11 +19,11 @@ function App() {
     // If token exists and is not expired, get user info and playlists
     const fetchData = async () => {
       try {
-        const userData = await SpotifyService.getUserInfo();
+        const userData = await SpotifyService.getUserInfo(); // Get user info
         setUsername(userData.data.display_name);
         setUserPic(userData.data.images[0].url);
 
-        const playlistData = await SpotifyService.getPlaylists();
+        const playlistData = await SpotifyService.getPlaylists(); // get
         setPlaylists(playlistData.data);
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -32,12 +31,14 @@ function App() {
       }
     };
 
-    if (localStorage.getItem("access_token") && !Auth.isTokenExpired()) {
+    // If a valid token exists, set loggedIn to true & fetch user/playlist data
+    if (Auth.isLoggedIn()) {
       setLoggedIn(true);
       fetchData();
     }
   }, []);
 
+  // Handle download by getting tracks from playlist and downloading CSV
   const handleDownload = async (playlist) => {
     try {
       const tracks = await SpotifyService.getPlaylistTracks(playlist);
@@ -47,9 +48,9 @@ function App() {
     }
   };
 
+  // Log out by removing tokens from local storage & set loggedIn to false
   const logout = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("expires_at");
+    Auth.removeTokens()
     setLoggedIn(false);
     setPlaylists(null);
   };

@@ -99,4 +99,11 @@ export async function getToken(code) {
   }
 }
 
+export function isLoggedIn() {
+  return localStorage.getItem("access_token") && !isTokenExpired();
+};
 
+export function removeTokens() {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("expiration_time");
+}
