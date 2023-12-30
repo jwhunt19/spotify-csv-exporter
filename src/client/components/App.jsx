@@ -151,6 +151,12 @@ function App() {
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
+
+    setTimeout(() => {
+      // Revoke the Blob URL after a short timeout
+      URL.revokeObjectURL(downloadLink.href);
+      document.body.removeChild(downloadLink);
+    }, 0); // Schedule the revoke after file has downloaded
   };
 
   const login = () => {
