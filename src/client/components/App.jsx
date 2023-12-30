@@ -2,19 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./App.css";
 import PlaylistList from "./PlaylistList";
-import {
-  initiateOAuthProcess,
-  isTokenExpired,
-  handleAuthCode,
-} from "../services/auth";
-import {
-  getUserInfo,
-  getPlaylists,
-  getPlaylistTracks,
-} from "../services/spotifyService";
-import { convertMillisecondsToMMSS } from "../utils/convertMillisecondsToMMSS";
+import * as Auth from "../services/auth";
+import * as SpotifyService from "../services/spotifyService";
+import { downloadCSV } from "../utils/downloadCSV";
 
-// react app
+// React app
 function App() {
   const [username, setUsername] = useState(null);
   const [userPic, setUserPic] = useState(null);
@@ -23,16 +15,16 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    handleAuthCode(setError);
+    Auth.handleAuthCode(setError);
 
     // If token exists and is not expired, get user info and playlists
     const fetchData = async () => {
       try {
-        const userData = await getUserInfo();
+        const userData = await SpotifyService.getUserInfo();
         setUsername(userData.data.display_name);
         setUserPic(userData.data.images[0].url);
 
-        const playlistData = await getPlaylists();
+        const playlistData = await SpotifyService.getPlaylists();
         setPlaylists(playlistData.data);
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -40,7 +32,7 @@ function App() {
       }
     };
 
-    if (localStorage.getItem("access_token") && !isTokenExpired()) {
+    if (localStorage.getItem("access_token") && !Auth.isTokenExpired()) {
       setLoggedIn(true);
       fetchData();
     }
@@ -48,41 +40,11 @@ function App() {
 
   const handleDownload = async (playlist) => {
     try {
-      const tracks = await getPlaylistTracks(playlist);
-      // downloadCSV(tracks, playlist.name);
+      const tracks = await SpotifyService.getPlaylistTracks(playlist);
+      downloadCSV(tracks, playlist.name);
     } catch (error) {
       setError(error);
     }
-  };
-
-  // TODO: move to utils?
-  const downloadCSV = (tracks, playlistName) => {
-    const csv = [["Artist", "Track", "Album", "Date_added", "Duration"]];
-    tracks.forEach((track) => {
-      let time = convertMillisecondsToMMSS(track.track.duration_ms);
-      csv.push([
-        `"${track.track.artists[0]?.name || "Unknown Artist"}"`,
-        `"${track.track.name || "Unknown Track"}"`,
-        `"${track.track.album?.name || "Unknown Album"}"`,
-        track.added_at.slice(0, -1) || "Unknown Date",
-        time || "Unknown Duration",
-      ]);
-    });
-    const csvContent = csv.map((e) => e.join(",")).join("\n");
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-
-    const downloadLink = document.createElement('a');
-    downloadLink.href = URL.createObjectURL(blob);
-    downloadLink.download = `${playlistName.replaceAll(" ", "_")}.csv`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-
-    setTimeout(() => {
-      // Revoke the Blob URL after a short timeout
-      URL.revokeObjectURL(downloadLink.href);
-      document.body.removeChild(downloadLink);
-    }, 0); // Schedule the revoke after file has downloaded
   };
 
   const logout = () => {
@@ -106,7 +68,7 @@ function App() {
           <button onClick={logout}>Log out</button>
         </>
       ) : (
-        <button onClick={initiateOAuthProcess}>Log in with Spotify</button>
+        <button onClick={Auth.initiateOAuthProcess}>Log in with Spotify</button>
       )}
 
       {error && <p>{error}</p>}
@@ -114,7 +76,7 @@ function App() {
       {playlists && (
         <PlaylistList
           playlists={playlists}
-          getPlaylists={getPlaylists}
+          getPlaylists={SpotifyService.getPlaylists}
           handleDownload={handleDownload}
         />
       )}
