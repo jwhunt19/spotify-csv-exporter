@@ -1,8 +1,8 @@
+import axios from "axios";
 import {
   generateCodeVerifier,
   generateCodeChallenge,
 } from "../utils/oauthUtils";
-import axios from "axios";
 
 // initiate OAuth process by redirecting to Spotify's authorization page
 export async function initiateOAuthProcess() {
@@ -99,20 +99,4 @@ export async function getToken(code) {
   }
 }
 
-// Get username and user picture
-export function getUserInfo() {
-  return axios.get("https://api.spotify.com/v1/me", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
-  });
-}
 
-// Get user's playlists
-export function getPlaylists(url = "https://api.spotify.com/v1/me/playlists") {
-  return axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    },
-  });
-};
