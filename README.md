@@ -1,5 +1,5 @@
 # spotify-csv-exporter
-A web application that allows users to export their Spotify playlists to CSV format. It's built with React and utilizes the Spotify Web API and OAuth for playlist data retrieval.
+A web application that allows users to export their Spotify playlists to CSV format. Built with React, it leverages the Spotify Web API and implements OAuth 2.0 with Proof Key for Code Exchange (PKCE) for secure authentication. This approach is particularly suited for single-page applications like this one, ensuring enhanced security during the playlist data retrieval process.
 
 ## Before you get started  
 You will need a Client ID from Spotify. To get a Client ID you need to create a [Spotify App](https://developer.spotify.com/documentation/web-api/concepts/apps) with access to the Web API as your API selection.  
@@ -44,7 +44,8 @@ While setting up the app, set the *Redirect URI* to your localhost for local dev
   **Important Notes**:
   - GitHub Pages Setup: The first time you deploy, you may need to set up GitHub Pages in the repository settings. Select the gh-pages branch as the source for GitHub Pages.
   - No Manual Deployment Needed: With this setup, there's no need for manual deployment commands (npm run deploy). The GitHub Actions workflow handles the build and deployment automatically.
-  - Initial Branch Setup: You don't need to manually create the gh-pages branch. The GitHub Actions workflow will create and push to this branch on its first successful run.
+  - Initial Branch Setup: You don't need to create the gh-pages branch manually. The GitHub Actions workflow will create and push to this branch on its first successful run.
+  - The app will initially only be usable by the Spotify account used to create the Spotify App. You may add up to 25 users in the App settings from the Spotify Dashboard.
   
 
 ## Usage
