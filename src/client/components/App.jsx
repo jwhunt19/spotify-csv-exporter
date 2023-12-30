@@ -5,7 +5,6 @@ import * as Auth from "../services/auth";
 import * as SpotifyService from "../services/spotifyService";
 import { downloadCSV } from "../utils/downloadCSV";
 
-// React app
 function App() {
   const [username, setUsername] = useState(null);
   const [userPic, setUserPic] = useState(null);
@@ -13,17 +12,16 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState(null);
 
+  // Handles auth code exchange for tokens & fetches user/playlist data
   useEffect(() => {
     Auth.handleAuthCode(setError);
-
-    // If token exists and is not expired, get user info and playlists
     const fetchData = async () => {
       try {
-        const userData = await SpotifyService.getUserInfo(); // Get user info
+        const userData = await SpotifyService.getUserInfo();
         setUsername(userData.data.display_name);
         setUserPic(userData.data.images[0].url);
 
-        const playlistData = await SpotifyService.getPlaylists(); // get
+        const playlistData = await SpotifyService.getPlaylists();
         setPlaylists(playlistData.data);
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -31,7 +29,6 @@ function App() {
       }
     };
 
-    // If a valid token exists, set loggedIn to true & fetch user/playlist data
     if (Auth.isLoggedIn()) {
       setLoggedIn(true);
       fetchData();
@@ -50,7 +47,7 @@ function App() {
 
   // Log out by removing tokens from local storage & set loggedIn to false
   const logout = () => {
-    Auth.removeTokens()
+    Auth.removeTokens();
     setLoggedIn(false);
     setPlaylists(null);
   };
