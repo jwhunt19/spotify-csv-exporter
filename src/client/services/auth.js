@@ -8,16 +8,14 @@ import axios from "axios";
 export async function initiateOAuthProcess() {
   const codeVerifier = generateCodeVerifier();
   const codeChallenge = await generateCodeChallenge(codeVerifier);
-
   const clientId = import.meta.env.VITE_CLIENT_ID;
   const redirectUri = import.meta.env.VITE_PUBLIC_URL;
-  
-  const scope = "playlist-read-private playlist-read-collaborative user-read-private user-read-email";
+  const scope =
+    "playlist-read-private playlist-read-collaborative user-read-private user-read-email";
   const authUrl = new URL("https://accounts.spotify.com/authorize");
-  
-  // generated in the previous step
+
   window.localStorage.setItem("code_verifier", codeVerifier);
-  
+
   const params = {
     response_type: "code",
     client_id: clientId,
@@ -26,15 +24,45 @@ export async function initiateOAuthProcess() {
     code_challenge: codeChallenge,
     redirect_uri: redirectUri,
   };
-  
+
   authUrl.search = new URLSearchParams(params).toString();
   window.location.href = authUrl.toString();
 }
 
-// get token from authorization code
+// Check if token is expired
+export function isTokenExpired() {
+  const expirationTime = localStorage.getItem("expiration_time");
+  return new Date().getTime() > expirationTime;
+}
+
+// Handles the OAuth authentication process.
+export function handleAuthCode(setError) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const code = urlParams.get("code");
+  const noValidToken =
+    !localStorage.getItem("access_token") || isTokenExpired();
+
+  if (code && noValidToken) {
+    getToken(code)
+      .then(() => {
+        // Update the URL and reload to complete the authentication flow
+        window.history.pushState({}, null, "/spotify-csv-exporter/");
+        location.reload();
+      })
+      .catch((error) => {
+        // Handle errors during the token exchange process
+        console.error("Error during token exchange:", error);
+        setError(error);
+      });
+  } else if (code) {
+    // Clean up URL if an auth code is present but not needed
+    window.history.pushState({}, null, "/spotify-csv-exporter/");
+  }
+}
+
+// Get token from authorization code
 export async function getToken(code) {
   let codeVerifier = localStorage.getItem("code_verifier");
-  
   const clientId = import.meta.env.VITE_CLIENT_ID;
   const redirectUri = import.meta.env.VITE_PUBLIC_URL;
   const url = "https://accounts.spotify.com/api/token";
@@ -71,8 +99,20 @@ export async function getToken(code) {
   }
 }
 
-// check if token is expired
-export function isTokenExpired() {
-  const expirationTime = localStorage.getItem("expiration_time");
-  return new Date().getTime() > expirationTime;
+// Get username and user picture
+export function getUserInfo() {
+  return axios.get("https://api.spotify.com/v1/me", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    },
+  });
+}
+
+// Get user's playlists
+export function getPlaylists(url = "https://api.spotify.com/v1/me/playlists") {
+  return axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    },
+  });
 };
