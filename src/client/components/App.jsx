@@ -69,12 +69,20 @@ function App() {
       ]);
     });
     const csvContent = csv.map((e) => e.join(",")).join("\n");
-    const encodedUri = encodeURIComponent(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", `data:text/csv;charset=utf-8,${encodedUri}`);
-    link.setAttribute("download", `${playlistName.replaceAll(" ", "_")}.csv`);
-    document.body.appendChild(link);
-    link.click();
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = `${playlistName.replaceAll(" ", "_")}.csv`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+
+    setTimeout(() => {
+      // Revoke the Blob URL after a short timeout
+      URL.revokeObjectURL(downloadLink.href);
+      document.body.removeChild(downloadLink);
+    }, 0); // Schedule the revoke after file has downloaded
   };
 
   const logout = () => {
