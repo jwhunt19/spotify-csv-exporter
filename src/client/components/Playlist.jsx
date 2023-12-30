@@ -1,13 +1,8 @@
 const Playlist = ({ playlist, handleDownload }) => {
-  const checkForImage = (playlist) => {
-    if (playlist.images.length > 0) {
-      return playlist.images[0].url;
-    } else {
-      return "/spotify-csv-exporter/playlist_placeholder.png";
-    }
-  };
-
-  let src = checkForImage(playlist);
+  const src =
+    playlist.images.length > 0
+      ? playlist.images[0].url
+      : "/spotify-csv-exporter/playlist_placeholder.png";
 
   return (
     <li>
